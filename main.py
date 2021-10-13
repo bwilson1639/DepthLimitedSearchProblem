@@ -1,38 +1,30 @@
-class Node:
+def move(self, missionary, cannibal):
+    if self.node[2] == 1:  # if the boat is on the left side
 
-    def __init__(self):
+        if missionary > 0:
+            self.node[0] = self.node[0] - missionary
 
-        self.node = [3, 3, 1, 0, 0, 0]
+            self.node[3] = self.node[3] + missionary
 
-    def move(self, missionary, cannibal):
+        if cannibal > 0:
+            self.node[1] = self.node[1] - cannibal
 
-        if self.node[2] == 1:  # if the boat is on the left side
+            self.node[4] = self.node[4] - cannibal
 
-            if missionary > 0:
-                self.node[0] = self.node[0] - missionary
+        self.node[2] = 0
+        self.node[5] = 1
 
-                self.node[3] = self.node[3] + missionary
+    else:  # if the boat is on the right side
 
-            if cannibal > 0:
-                self.node[1] = self.node[1] - cannibal
+        if missionary > 0:
+            self.node[3] = self.node[3] - missionary
 
-                self.node[4] = self.node[4] - cannibal
+            self.node[0] = self.node[0] + missionary
 
-            self.node[2] = 0
-            self.node[5] = 1
+        if cannibal > 0:
+            self.node[4] = self.node[4] - cannibal
 
-        else:  # if the boat is on the right side
+            self.node[1] = self.node[1] - cannibal
 
-            if missionary > 0:
-                self.node[3] = self.node[3] - missionary
-
-                self.node[0] = self.node[0] + missionary
-
-            if cannibal > 0:
-                self.node[4] = self.node[4] - cannibal
-
-                self.node[1] = self.node[1] - cannibal
-
-            self.node[5] = 0
-            self.node[2] = 1
-
+        self.node[5] = 0
+        self.node[2] = 1
