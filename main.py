@@ -1,30 +1,29 @@
-def move(self, missionary, cannibal):
-    if self.node[2] == 1:  # if the boat is on the left side
 
-        if missionary > 0:
-            self.node[0] = self.node[0] - missionary
+initialTuple = [3,3,1,0,0,0]
 
-            self.node[3] = self.node[3] + missionary
+def depthLimitedSearch(limit):
+    return recursiveDLS(initialTuple,None, limit)
 
-        if cannibal > 0:
-            self.node[1] = self.node[1] - cannibal
+def recursiveDLS(inheritedNode, action, limit):
 
-            self.node[4] = self.node[4] - cannibal
+    if inheritedNode == [0,0,0,3,3,1]:
+        return 1   #return 1 indicates that the goal has been reached
+    elif (limit == 0):
+        return 2  #return 2 indicates that there is a limit break
 
-        self.node[2] = 0
-        self.node[5] = 1
+    else:
+        cutoffOccured = False
 
-    else:  # if the boat is on the right side
+        for node in possibleActions(inheritedNode):
 
-        if missionary > 0:
-            self.node[3] = self.node[3] - missionary
 
-            self.node[0] = self.node[0] + missionary
 
-        if cannibal > 0:
-            self.node[4] = self.node[4] - cannibal
 
-            self.node[1] = self.node[1] - cannibal
 
-        self.node[5] = 0
-        self.node[2] = 1
+def possibleActions(inheritedNode):
+
+    actionList = []
+
+    if inheritedNode[2] == 1:
+
+        if
