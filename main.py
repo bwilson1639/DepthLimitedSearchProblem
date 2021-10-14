@@ -1,10 +1,11 @@
 
 initialTuple = [3,3,1,0,0,0]
 
-def depthLimitedSearch(limit):
-    return recursiveDLS(initialTuple,None, limit)
 
-def recursiveDLS(inheritedNode, action, limit):
+def depthLimitedSearch(limit):
+    return recursiveDLS(initialTuple, limit)
+
+def recursiveDLS(inheritedNode, limit):
 
     if inheritedNode == [0,0,0,3,3,1]:
         return 1   #return 1 indicates that the goal has been reached
@@ -16,8 +17,22 @@ def recursiveDLS(inheritedNode, action, limit):
 
         for nodeAction in possibleActions(inheritedNode):
 
-            child = childAction(inheritedNode, nodeAction)
+            child = childAction(inheritedNode, nodeAction) # list
+            result = recursiveDLS(child, limit - 1)
 
+            if result == 2:
+                cutoffOccured = True
+
+            elif result != 0:
+
+                print('At the current ' + inheritedNode + ' you will take the action ' + actionExplain(nodeAction) \
+                      + ' and then, your new state is ' + child)
+                return result
+
+            if cutoffOccured:
+                return 2
+            else:
+                return 0
 
 #takes in a list, returns a list of strings with possible actions
 def possibleActions(inheritedNode):
@@ -72,4 +87,85 @@ def possibleActions(inheritedNode):
 def childAction(node, inputedActionString):
 
     if inputedActionString == '1MsideB':
-        
+        node[0] = node[0] - 1
+        node[2] = 0
+        node[3] = node[3] + 1
+        node[5] = 1
+        return  node
+    if inputedActionString == '2MsideB':
+        node[0] = node[0] - 2
+        node[2] = 0
+        node[3] = node[3] + 2
+        node[5] = 1
+        return node
+    if inputedActionString == '1M1CsideB':
+        node[0] = node[0] - 1
+        node[1] = node[1] - 1
+        node[2] = 0
+        node[3] = node[3] + 1
+        node[4] = node[4] + 1
+        node[5] = 1
+        return node
+    if inputedActionString == '1CsideB':
+        node[1] = node[1] - 1
+        node[2] = 0
+        node[4] = node[4] + 1
+        node[5] = 1
+        return node
+    if inputedActionString == '2CsideB':
+        node[1] = node[1] - 2
+        node[2] = 0
+        node[4] = node[4] + 2
+        node[5] = 1
+        return node
+    if inputedActionString == '1MsideA':
+        node[0] = node[0] + 1
+        node[2] = 1
+        node[3] + node[3] - 1
+        node[5] = 0
+        return node
+    if inputedActionString == '2MsideA':
+        node[0] = node[0] + 2
+        node[2] = 1
+        node[3] = node[3] - 2
+        node[5] = 0
+        return node
+    if inputedActionString == '1M1CsideA':
+        node[0] = node[0] + 1
+        node[1] = node[1] + 1
+        node[2] = 1
+        node[3] = node[3] - 1
+        node[4] = node[4] - 1
+        node[5] = 0
+        return node
+    if inputedActionString == '1CsideA':
+        node[1] = node[1] + 1
+        node[2] = 1
+        node[4] = node[4] - 1
+        node[5] = 0
+        return node
+    if inputedActionString == '2CsideA':
+        node[1] = node[1] + 2
+        node[2] = 1
+        node[4] = node[4] + 2
+        node[5] = 0
+        return node
+
+#takes in a string, returns the string in proper english
+def actionExplain(inputString):
+
+    actions = {
+        '1MsideB' : '<Move 1 missionary from sideA to sideB>',
+        '2MsideB' : '<Move 2 missionaries from sideA to sideB>',
+        '1M1CsideB' : '<Move 1 missionary and 1 cannibal from sideA to sideB>',
+        '1CsideB' : '<Move 1 cannibal from sideA to sideB>',
+        '2CsideB' : '<Move 2 cannibals from sideA to sideB>',
+        '1MsideA' : '<Move 1 missionary from sideB to sideA>',
+        '2MsideA' : '<Move 2 missionaries from sideB to sideA>',
+        '1M1CsideA' : '<Move 1 missionary and 1 cannibal from sideB to sideA>',
+        '1CsideA' : '<Move 1 cannibal from sideB to sideA>',
+        '2CsideA' : '<Move 2 cannibals from sideB to sideA>'}
+
+    return actions[inputString]
+
+depthLimitedSearch(15)
